@@ -61,8 +61,30 @@ BEGIN
                             'Id', i.Id,
                             'Nombre', i.Nombre,
                             'Edad', i.Edad,
-                            'Direccion', i.Direccion,
-                            'Genero', i.Genero,
+                            'Direccion', (
+                                SELECT JSON_OBJECT(
+                                    'Id', d.Id,
+                                    'Nombre_Calle', d.Nombre_Calle,
+                                    'Numero_Exterior', d.Numero_Exterior,
+                                    'Numero_Interior', d.Numero_Interior,
+                                    'Colonia_Barrio', d.Colonia_Barrio,
+                                    'Codigo_Postal', d.Codigo_Postal,
+                                    'Ciudad_Localidad', d.Ciudad_Localidad,
+                                    'Estado_Provincia', d.Estado_Provincia,
+                                    'Pais', d.Pais
+                                )
+                                FROM direcciones d
+                                WHERE d.Id = i.Direccion
+                            ),
+                            'Genero', (
+                                SELECT JSON_OBJECT(
+                                    'Id', g.Id,
+                                    'Nombre', g.Nombre,
+                                    'Descripcion', g.Descripcion
+                                )
+                                FROM generos g
+                                WHERE g.Id = i.Genero
+                            ),
                             'Salario', i.Salario
                         )
                     ), ']') INTO Todos_Registros FROM individuos i;
@@ -86,8 +108,30 @@ BEGIN
                                 'Id', i.Id,
                                 'Nombre', i.Nombre,
                                 'Edad', i.Edad,
-                                'Direccion', i.Direccion,
-                                'Genero', i.Genero,
+                                'Direccion', (
+                                    SELECT JSON_OBJECT(
+                                        'Id', d.Id,
+                                        'Nombre_Calle', d.Nombre_Calle,
+                                        'Numero_Exterior', d.Numero_Exterior,
+                                        'Numero_Interior', d.Numero_Interior,
+                                        'Colonia_Barrio', d.Colonia_Barrio,
+                                        'Codigo_Postal', d.Codigo_Postal,
+                                        'Ciudad_Localidad', d.Ciudad_Localidad,
+                                        'Estado_Provincia', d.Estado_Provincia,
+                                        'Pais', d.Pais
+                                    )
+                                    FROM direcciones d
+                                    WHERE d.Id = i.Direccion
+                                ),
+                                'Genero', (
+                                    SELECT JSON_OBJECT(
+                                        'Id', g.Id,
+                                        'Nombre', g.Nombre,
+                                        'Descripcion', g.Descripcion
+                                    )
+                                    FROM generos g
+                                    WHERE g.Id = i.Genero
+                                ),
                                 'Salario', i.Salario
                             ),
                             'Message', 'Datos encontrados.'

@@ -32,6 +32,10 @@ function llamarProcIndividuos(){
             let respuestaTratada = JSON.parse(respuestaNoTratada.Retorno);
             if(!respuestaTratada.Data) return console.error(respuestaTratada.Message);
             let dataTratada = JSON.parse(respuestaTratada.Data);
+            dataTratada.map((x)=>{
+                x.Direccion = JSON.parse(x.Direccion);
+                x.Genero = JSON.parse(x.Genero);
+            });
             console.log(dataTratada);
         }
     };
