@@ -1,0 +1,14 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background-color: #ebe6ea;
+    color: #273a2d;
+    box-sizing: border-box;
+}
+.block_select_text {
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}

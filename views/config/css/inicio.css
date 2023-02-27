@@ -1,0 +1,19 @@
+#form_login{
+    margin-top: 20vh;
+    margin-bottom: 20vh;
+    height: 60vh;
+    margin-left: 35vw;
+    margin-right: 35vw;
+    width: 30vw;
+    background-color: #c8ad8d;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+#titulo_login{
+    background-color: #ebe6ea;
+    width: 30vw;
+    text-align: center;
+    height: 3vh;
+    border-radius: 5px;
+    font-weight: bold;
+}
