@@ -391,14 +391,14 @@ function exportarAExcel(){
                                     ' | '+element.Genero.Descripcion,
                     "Salario": element.Salario})
     });
-    var wb = XLSX.utils.book_new();
-    var ws = XLSX.utils.json_to_sheet(datos);
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.json_to_sheet(datos);
     XLSX.utils.book_append_sheet(wb, ws, "Hoja1");
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    let wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
     function s2ab(s) {
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        let buf = new ArrayBuffer(s.length);
+        let view = new Uint8Array(buf);
+        for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
         return buf;
     }
     saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Registros.xlsx');
