@@ -40,7 +40,7 @@
                                     aria-describedby="span_nombre_acc">
                         </div>
                         <div class="input-group mb-3" id="contenedor_genero_acc">
-                            <span class="input-group-text" id="span_genero_acc">Genero:</span>
+                            <span class="input-group-text" id="span_genero_acc">Género:</span>
                             <select class="form-select form-control"
                                     aria-label="Genero"
                                     id="Genero_Acc"
@@ -132,7 +132,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Edad</th>
                                 <th scope="col">Direccion</th>
-                                <th scope="col">Genero</th>
+                                <th scope="col">Género</th>
                                 <th scope="col">Salario</th>
                             </tr>
                         </thead>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="card text-center mb-3">
                         <div class="card-header">
-                            Salario Promedio Por Genero:
+                            Salario Promedio Por Género:
                         </div>
                         <div class="card-body">
                             <div class="input-group mb-3">
