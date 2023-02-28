@@ -7,23 +7,29 @@ let Temp_Id_Direccion = 0;
 function llamarProcGeneros(datos, callback){
     XHTTP.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            // Procesar la respuesta del archivo PHP
             if(!this.response) {
                 console.error("No se obtubo respuesta del servicio");
-                return false;
+                return callback(false, "No se obtubo respuesta del servicio");
             }
             let respuestaNoTratada = JSON.parse(this.response);
             if(!respuestaNoTratada.Retorno) {
                 console.error("No se obtubo respuesta del servicio");
-                return false;
+                return callback(false, "No se obtubo el retorno en respuesta del servicio");
             }
             let respuestaTratada = JSON.parse(respuestaNoTratada.Retorno);
             if(!respuestaTratada.Data) {
                 console.error(respuestaTratada.Message);
-                return false;
+                return callback(false, respuestaTratada.Message);
             }
-            let dataTratada = JSON.parse(respuestaTratada.Data);
-            return callback(dataTratada);
+            if(typeof respuestaTratada.Data == 'string'){
+                let dataTratada = JSON.parse(respuestaTratada.Data);
+                return callback(true, dataTratada);
+            } else if(typeof respuestaTratada.Data == 'object'){
+                return callback(true, null);
+            } else {
+                console.error("La respuesta no puede ser tratada");
+                return callback(false, "La respuesta no puede ser tratada");
+            }
         }
     };
     XHTTP.open("POST", "../config/backend/generos.back.php", true);
@@ -33,23 +39,29 @@ function llamarProcGeneros(datos, callback){
 function llamarProcDirecciones(datos, callback){
     XHTTP.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            // Procesar la respuesta del archivo PHP
             if(!this.response) {
                 console.error("No se obtubo respuesta del servicio");
-                return false;
+                return callback(false, "No se obtubo respuesta del servicio");
             }
             let respuestaNoTratada = JSON.parse(this.response);
             if(!respuestaNoTratada.Retorno) {
                 console.error("No se obtubo respuesta del servicio");
-                return false;
+                return callback(false, "No se obtubo el retorno en respuesta del servicio");
             }
             let respuestaTratada = JSON.parse(respuestaNoTratada.Retorno);
             if(!respuestaTratada.Data) {
                 console.error(respuestaTratada.Message);
-                return false;
+                return callback(false, respuestaTratada.Message);
             }
-            let dataTratada = JSON.parse(respuestaTratada.Data);
-            return callback(dataTratada);
+            if(typeof respuestaTratada.Data == 'string'){
+                let dataTratada = JSON.parse(respuestaTratada.Data);
+                return callback(true, dataTratada);
+            } else if(typeof respuestaTratada.Data == 'object'){
+                return callback(true, null);
+            } else {
+                console.error("La respuesta no puede ser tratada");
+                return callback(false, "La respuesta no puede ser tratada");
+            }
         }
     };
     XHTTP.open("POST", "../config/backend/direcciones.back.php", true);
@@ -299,6 +311,7 @@ function selectElement(Id){
             inputDireccion.value = element.Direccion.Nombre_Calle+
             ' #'+element.Direccion.Numero_Exterior+
             ', '+element.Direccion.Colonia_Barrio+
+            ', '+element.Direccion.Codigo_Postal+
             ', '+element.Direccion.Ciudad_Localidad+
             ', '+element.Direccion.Estado_Provincia+
             ', '+element.Direccion.Pais;
@@ -340,6 +353,7 @@ function exportarAExcel(){
                                     ' - '+element.Direccion.Nombre_Calle+
                                     ' #'+element.Direccion.Numero_Exterior+
                                     ', '+element.Direccion.Colonia_Barrio+
+                                    ', '+element.Direccion.Codigo_Postal+
                                     ', '+element.Direccion.Ciudad_Localidad+
                                     ', '+element.Direccion.Estado_Provincia+
                                     ', '+element.Direccion.Pais,
@@ -367,10 +381,10 @@ function llenarGeneros(){
         DESCRIPCION: null,
         OPCION: "READ"
     };
-    llamarProcGeneros(datos,(generos)=>{
+    llamarProcGeneros(datos,(estado, generos)=>{
         let inputGenero = document.getElementById("Genero_Acc");
         inputGenero.innerHTML = '<option selected value=0>Seleccionar genero...</option>';
-        if(generos){
+        if(estado){
             Temp_Generos = generos;
             generos.forEach(element => {
                 inputGenero.innerHTML += '<option value="'+element.Id+'">' + element.Nombre + '</option>';

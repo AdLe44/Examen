@@ -13,8 +13,8 @@ function llenarDirecciones(){
         PAIS: null,
         OPCION: "READ"
     };
-    llamarProcDirecciones(datos, (retorno)=>{
-        if(retorno){
+    llamarProcDirecciones(datos, (estado, retorno)=>{
+        if(estado){
             Temp_Direcciones = retorno;
             retorno.forEach(element => {
                 let li = document.createElement('li');
@@ -27,6 +27,7 @@ function llenarDirecciones(){
                 li.innerHTML = element.Nombre_Calle+
                                 ' #'+element.Numero_Exterior+
                                 ', '+element.Colonia_Barrio+
+                                ', '+element.Codigo_Postal+
                                 ', '+element.Ciudad_Localidad+
                                 ', '+element.Estado_Provincia+
                                 ', '+element.Pais;
@@ -51,6 +52,7 @@ function selectList(Id){
             inputDireccion.value = element.Nombre_Calle+
             ' #'+element.Numero_Exterior+
             ', '+element.Colonia_Barrio+
+            ', '+element.Codigo_Postal+
             ', '+element.Ciudad_Localidad+
             ', '+element.Estado_Provincia+
             ', '+element.Pais;
