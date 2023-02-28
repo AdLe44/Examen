@@ -22,16 +22,95 @@
                     Acciones
                 </div>
                 <div class="card-body">
-                    <button class="btn btn-primary" type="button" onclick="llenarTablaIndividuos()">
+                    <div class="container d-flex">
+                        <div class="input-group mb-3" id="contenedor_nombre_acc">
+                            <span class="input-group-text" id="span_nombre_acc">Nombre:</span>
+                            <input  type="text"
+                                    class="form-control"
+                                    placeholder="Nombre"
+                                    aria-label="Nombre"
+                                    id="Nombre_Acc"
+                                    name="Nombre_Acc"
+                                    aria-describedby="span_nombre_acc">
+                        </div>
+                        <div class="input-group mb-3" id="contenedor_genero_acc">
+                            <span class="input-group-text" id="span_genero_acc">Genero:</span>
+                            <select class="form-select form-control"
+                                    aria-label="Genero"
+                                    id="Genero_Acc"
+                                    name="Genero_Acc"
+                                    aria-describedby="span_genero_acc">
+                            </select>
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    id="span_genero_acc"><i class="fa-sharp fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="input-group mb-3" id="contenedor_edad_acc">
+                            <span class="input-group-text" id="span_edad_acc">Edad:</span>
+                            <input  type="text"
+                                    class="form-control"
+                                    placeholder="Edad"
+                                    aria-label="Edad"
+                                    id="Edad_Acc"
+                                    name="Edad_Acc"
+                                    aria-describedby="span_edad_acc">
+                        </div>
+                    </div>
+                    <div class="container d-flex">
+                        <div class="input-group mb-3" id="contenedor_direccion_acc">
+                            <span class="input-group-text" id="span_direccion_acc">Dirección:</span>
+                            <input  type="text"
+                                    class="form-control"
+                                    placeholder="Dirección"
+                                    aria-label="Dirección"
+                                    id="Direccion_Acc"
+                                    name="Direccion_Acc"
+                                    aria-describedby="span_direccion_acc"
+                                    readonly
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_select_direccion"
+                                    onclick="llenarDirecciones()">
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    id="span_direccion_acc"><i class="fa-sharp fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="input-group mb-3" id="contenedor_salario_acc">
+                            <span class="input-group-text" id="span_salario_acc">Salario:</span>
+                            <input  type="text"
+                                    class="form-control"
+                                    placeholder="Salario"
+                                    aria-label="Salario"
+                                    id="Salario_Acc"
+                                    name="Salario_Acc"
+                                    aria-describedby="span_salario_acc">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted d-flex">
+                    <!-- <button class="btn btn-light" type="button" onclick="llenarTablaIndividuos()">
                         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                         Loading...
+                    </button> -->
+                    <button class="btn btn-light" type="button" onclick="llenarTablaIndividuos()">
+                        <i class="fa-solid fa-magnifying-glass"></i> Buscar registros
+                    </button>
+                    <button class="btn btn-light" type="button" onclick="agregarRegistro()">
+                        <i class="fa-sharp fa-solid fa-plus"></i> Agregar registro
+                    </button>
+                    <button class="btn btn-light" type="button" onclick="editarRegistro()">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar registro
+                    </button>
+                    <button class="btn btn-light" type="button" onclick="eliminarRegistro()">
+                        <i class="fa-sharp fa-solid fa-trash"></i> Eliminar registro
+                    </button>
+                    <button class="btn btn-light ms-auto" type="button" onclick="limpiarPantalla()">
+                        <i class="fa-solid fa-eraser"></i> Limpiar pantalla
                     </button>
                 </div>
-                <div class="card-footer text-muted">
-                    <!--  -->
-                </div>
             </div>
-            <div class="card text-center mb-3">
+            <div class="card text-center mb-3" id="card_tabla_registros">
                 <div class="card-header">
                     Individuos
                 </div>
@@ -47,34 +126,27 @@
                                 <th scope="col">Salario</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="table-active">
-                                <th scope="row">3</th>
-                                <td>Larry the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
+                        <tbody><tr><td colspan="6">No se encontraron registros</td></tr></tbody>
                     </table>
                 </div>
-                <div class="card-footer text-muted">
-                    <!--  -->
+                <div class="card-footer text-muted d-flex">
+                    <button class="btn btn-light" type="button" onclick="exportarAExcel()">
+                        <i class="fa-solid fa-file-excel"></i> Exportar a excel
+                    </button>
                 </div>
             </div>
-            <div class="card text-center mb-3">
+            <div class="card text-center mb-3" id="card_tabla_totales">
                 <div class="card-header">
                     Total de salarios
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="Total_Salarios">Totalizado de Salarios: </span>
-                        <label class="form-control" aria-describedby="Total_Salarios" id=""></label>
+                        <label class="form-control" aria-describedby="Total_Salarios" id="Show_Total_Salarios"></label>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="Salario_Promedio_General">Salario Promedio General: </span>
-                        <label class="form-control" aria-describedby="Salario_Promedio_General" id=""></label>
+                        <label class="form-control" aria-describedby="Salario_Promedio_General" id="Show_Salario_Promedio_General"></label>
                     </div>
                     <div class="card text-center mb-3">
                         <div class="card-header">
@@ -83,11 +155,11 @@
                         <div class="card-body">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="Genero_Hombre">Hombre: </span>
-                                <label class="form-control" aria-describedby="Genero_Hombre" id=""></label>
+                                <label class="form-control" aria-describedby="Genero_Hombre" id="Show_Genero_Hombre"></label>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="Genero_Mujer">Mujer: </span>
-                                <label class="form-control" aria-describedby="Genero_Mujer" id=""></label>
+                                <label class="form-control" aria-describedby="Genero_Mujer" id="Show_Genero_Mujer"></label>
                             </div>
                         </div>
                     </div>
@@ -98,5 +170,6 @@
             </div>
         </div>
         <script src="./config/js/inicio.js" ></script>
+        <?php include './view/modules/modal_select_direccion.php'; ?>
     </body>
 </html>

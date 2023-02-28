@@ -10,10 +10,10 @@
     $stmt = $pdo->prepare("CALL SP_ACCIONES_INDIVIDUO(:Id_Acc, :Nombre_Acc, :Edad_Acc, :Direccion_Acc, :Genero_Acc, :Salario_Acc, :Opcion)");
     $stmt->bindParam(":Id_Acc", $id, PDO::PARAM_INT);
     $stmt->bindParam(":Nombre_Acc", $nombre, PDO::PARAM_STR);
-    $stmt->bindParam(":Edad_Acc", $descripcion, PDO::PARAM_INT);
-    $stmt->bindParam(":Direccion_Acc", $descripcion, PDO::PARAM_INT);
-    $stmt->bindParam(":Genero_Acc", $descripcion, PDO::PARAM_INT);
-    $stmt->bindParam(":Salario_Acc", $descripcion, PDO::PARAM_STR);
+    $stmt->bindParam(":Edad_Acc", $edad, PDO::PARAM_INT);
+    $stmt->bindParam(":Direccion_Acc", $direccion, PDO::PARAM_INT);
+    $stmt->bindParam(":Genero_Acc", $genero, PDO::PARAM_INT);
+    $stmt->bindParam(":Salario_Acc", $salario, PDO::PARAM_STR);
     $stmt->bindParam(":Opcion", $opcion, PDO::PARAM_STR);
     $stmt->execute();
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);

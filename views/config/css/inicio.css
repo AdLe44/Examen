@@ -17,3 +17,32 @@
     border-radius: 5px;
     font-weight: bold;
 }
+#contenedor_nombre_acc{
+    width: 50% !important;
+    margin-right: 10px;
+}
+#contenedor_edad_acc{
+    width: 20% !important;
+    margin-right: 10px;
+}
+#contenedor_genero_acc{
+    width: 30% !important;
+    margin-right: 10px;
+}
+#contenedor_direccion_acc{
+    width: 80% !important;
+    margin-right: 10px;
+}
+#contenedor_salario_acc{
+    width: 20% !important;
+    margin-right: 10px;
+}
+#card_tabla_registros{
+    display: none;
+}
+#card_tabla_totales{
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+    display: none;
+}

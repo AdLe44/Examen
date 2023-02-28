@@ -140,7 +140,6 @@ BEGIN
                     ELSE
                         DELETE FROM generos WHERE Id = Id_Acc;
                         IF ROW_COUNT() > 0 THEN
-                            SELECT g.Id INTO Id_Retorno FROM generos g WHERE g.Id = Id_Acc;
                             SELECT JSON_OBJECT(
                                 'Status', 'Ok',
                                 'Data', JSON_OBJECT(),

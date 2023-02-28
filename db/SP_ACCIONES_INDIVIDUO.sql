@@ -187,7 +187,6 @@ BEGIN
                         'Message', 'No se envio el ID del género para actualizar.'
                     ) AS Retorno;
                 ELSE
-                    SELECT COUNT(i.Id) INTO Bandera FROM individuos i WHERE i.Id = Id_Acc;
                     IF(Bandera < 1) THEN
                         SELECT JSON_OBJECT(
                             'Status', 'Error',
@@ -223,7 +222,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL SP_ACCIONES_INDIVIDUO (NULL,'Manuel Adrián Millán Leal', 23, 1, 5, 18500.50, 'CREATE');
-CALL SP_ACCIONES_INDIVIDUO (1,'Manuel Adrián Millán Leal', 23, 1, 7, 18500.50, 'UPDATE');
+CALL SP_ACCIONES_INDIVIDUO (NULL,'Manuel Adrián Millán Leal', 23, 2, 1, 18500.50, 'CREATE');
+CALL SP_ACCIONES_INDIVIDUO (1,'Manuel Adrián Millán Leal', 23, 2, 2, 18500.50, 'UPDATE');
 
 CALL SP_ACCIONES_INDIVIDUO (NULL,NULL, NULL, NULL, NULL, NULL, 'READ');
