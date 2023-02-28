@@ -97,27 +97,57 @@ function normalizarDatos(datos){
         return encodeURIComponent(key) + '=' + encodeURIComponent(datos[key]);
     }).join('&');
 }
+function validacionesPrevias(nombre, edad, salario, callback){
+    let nombreRegex = /^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+['-]?)+$/;
+    let edadRegex = /^\d+$/;
+    let salarioRegex = /^-?\d+(?:[.,]\d+)?$/;
+    if (!nombreRegex.test(nombre)) {
+        return callback(false, 'El nombre no cumple con las condicones de nombre validas');
+    }
+    if (!edadRegex.test(edad)) {
+        return callback(false, 'La edad no es un numero');
+    }
+    let edad_validar = parseInt(edad);
+    if (Number.isInteger(edad_validar)) {
+        if(edad_validar <= 0) return callback(false, 'La edad debe ser mayor a 0');
+    } else {
+        return callback(false, 'La edad no es un numero');
+    }
+    if (!salarioRegex.test(salario)) {
+        return callback(false, 'El salario no es un numero');
+    }
+    let salario_validar = parseFloat(salario);
+    if(salario_validar <= 0) return callback(false, 'El salario debe ser mayor a 0');
+    return callback(true, '');
+}
 function agregarRegistro(){
     let inputNombre = document.getElementById("Nombre_Acc");
     let inputEdad = document.getElementById("Edad_Acc");
     let inputGenero = document.getElementById("Genero_Acc");
     let inputSalario = document.getElementById("Salario_Acc");
     if(Temp_Id_Direccion > 0 && inputGenero.value > 0 && Temp_Id_Registro == 0){
-        let datos = {
-            ID: null,
-            NOMBRE: inputNombre.value,
-            EDAD: parseInt(inputEdad.value),
-            DIRECCION: Temp_Id_Direccion,
-            GENERO: inputGenero.value,
-            SALARIO: inputSalario.value,
-            OPCION: "CREATE"
-        };
-        llamarProcIndividuos(datos,(estado, retorno)=>{
+        validacionesPrevias(inputNombre.value, inputEdad.value, inputSalario.value, (estado, retorno)=>{
             if(estado){
-                llenarTablaIndividuos();
-            } else{
+                let datos = {
+                    ID: null,
+                    NOMBRE: inputNombre.value,
+                    EDAD: parseInt(inputEdad.value),
+                    DIRECCION: Temp_Id_Direccion,
+                    GENERO: inputGenero.value,
+                    SALARIO: inputSalario.value,
+                    OPCION: "CREATE"
+                };
+                llamarProcIndividuos(datos,(estado, retorno)=>{
+                    if(estado){
+                        llenarTablaIndividuos();
+                    } else{
+                        let contenedorErrores = document.getElementById("contenedor_errores");
+                        contenedorErrores.innerHTML = '<div class="alert alert-danger" role="alert">'+retorno+'</div>';
+                    }
+                });
+            }else{
                 let contenedorErrores = document.getElementById("contenedor_errores");
-                contenedorErrores.innerHTML = '<div class="alert alert-danger" role="alert">'+retorno+'</div>';
+                contenedorErrores.innerHTML = '<div class="alert alert-warning" role="alert"><i class="fa-solid fa-triangle-exclamation"></i>'+retorno+'</div>';
             }
         });
     }else if(Temp_Id_Direccion == 0){
@@ -137,21 +167,28 @@ function editarRegistro(){
     let inputGenero = document.getElementById("Genero_Acc");
     let inputSalario = document.getElementById("Salario_Acc");
     if(Temp_Id_Direccion > 0 && inputGenero.value > 0 && Temp_Id_Registro > 0){
-        let datos = {
-            ID: Temp_Id_Registro,
-            NOMBRE: inputNombre.value,
-            EDAD: parseInt(inputEdad.value),
-            DIRECCION: Temp_Id_Direccion,
-            GENERO: inputGenero.value,
-            SALARIO: inputSalario.value,
-            OPCION: "UPDATE"
-        };
-        llamarProcIndividuos(datos,(estado, retorno)=>{
+        validacionesPrevias(inputNombre.value, inputEdad.value, inputSalario.value, (estado, retorno)=>{
             if(estado){
-                llenarTablaIndividuos();
-            } else{
+                let datos = {
+                    ID: Temp_Id_Registro,
+                    NOMBRE: inputNombre.value,
+                    EDAD: parseInt(inputEdad.value),
+                    DIRECCION: Temp_Id_Direccion,
+                    GENERO: inputGenero.value,
+                    SALARIO: inputSalario.value,
+                    OPCION: "UPDATE"
+                };
+                llamarProcIndividuos(datos,(estado, retorno)=>{
+                    if(estado){
+                        llenarTablaIndividuos();
+                    } else{
+                        let contenedorErrores = document.getElementById("contenedor_errores");
+                        contenedorErrores.innerHTML = '<div class="alert alert-danger" role="alert">'+retorno+'</div>';
+                    }
+                });
+            }else{
                 let contenedorErrores = document.getElementById("contenedor_errores");
-                contenedorErrores.innerHTML = '<div class="alert alert-danger" role="alert">'+retorno+'</div>';
+                contenedorErrores.innerHTML = '<div class="alert alert-warning" role="alert"><i class="fa-solid fa-triangle-exclamation"></i>'+retorno+'</div>';
             }
         });
     }else if(Temp_Id_Direccion == 0){
@@ -292,6 +329,36 @@ function limpiarPantalla(){
     Temp_Direcciones = [];
     Temp_Id_Registro = 0;
     Temp_Id_Direccion = 0;
+}
+function exportarAExcel(){
+    let datos = [];
+    Temp_Registros.forEach(element => {
+        datos.push({"Id": element.Id,
+                    "Nombre": element.Nombre,
+                    "Edad": element.Edad,
+                    "Direccion":    element.Direccion.Id+
+                                    ' - '+element.Direccion.Nombre_Calle+
+                                    ' #'+element.Direccion.Numero_Exterior+
+                                    ', '+element.Direccion.Colonia_Barrio+
+                                    ', '+element.Direccion.Ciudad_Localidad+
+                                    ', '+element.Direccion.Estado_Provincia+
+                                    ', '+element.Direccion.Pais,
+                    "Genero":       element.Genero.Id+
+                                    ' - '+element.Genero.Nombre+
+                                    ' | '+element.Genero.Descripcion,
+                    "Salario": element.Salario})
+    });
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.json_to_sheet(datos);
+    XLSX.utils.book_append_sheet(wb, ws, "Hoja1");
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+    saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Registros.xlsx');
 }
 function llenarGeneros(){
     let datos = {
