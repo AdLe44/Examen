@@ -116,8 +116,8 @@ BEGIN
                             'Message', 'El ID insertado no pertenece a algún registro.'
                         ) AS Retorno;
                     ELSE
-                        UPDATE direcciones 
-                            SET Nombre_Calle = Nombre_Calle_Acc, 
+                        UPDATE direcciones
+                            SET Nombre_Calle = Nombre_Calle_Acc,
                                 Numero_Exterior = Numero_Exterior_Acc,
                                 Numero_Interior = Numero_Interior_Acc,
                                 Colonia_Barrio = Colonia_Barrio_Acc,

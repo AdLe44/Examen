@@ -22,6 +22,7 @@
                     Acciones
                 </div>
                 <div class="card-body">
+                    <div class="container" id="contenedor_errores"></div>
                     <div class="container d-flex">
                         <div class="input-group mb-3" id="contenedor_nombre_acc">
                             <span class="input-group-text" id="span_nombre_acc">Nombre:</span>
