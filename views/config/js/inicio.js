@@ -258,6 +258,7 @@ function llenarTablaIndividuos(){
             Temp_Registros = retorno;
             let totalSalario = 0,
                 salarios = [],
+                objetosSalarioGenero = [],
                 countSalarios = 0,
                 promedioSalarioGeneral = 0;
             retorno.forEach(element => {
@@ -274,6 +275,23 @@ function llenarTablaIndividuos(){
                                 '<td>' + "$" + element.Salario.toFixed(2) + '</td>';
                 tablaBody.appendChild(row);
                 salarios.push(parseFloat(element.Salario.toFixed(2)));
+                let exist = false;
+                for(const sg of objetosSalarioGenero){
+                    if(sg.Genero == element.Genero.Nombre){
+                        sg.Salario += parseFloat(element.Salario.toFixed(2));
+                        sg.Cantidad++;
+                        exist = true;
+                        break;
+                    }
+                }
+                if(!exist){
+                    objetosSalarioGenero.push({
+                        'Salario': parseFloat(element.Salario.toFixed(2)), 
+                        'Genero': element.Genero.Nombre,
+                        'Cantidad': 1,
+                        'Promedio': 0
+                    });
+                }
             });
             countSalarios = salarios.length;
             salarios.forEach(x=>{
@@ -282,6 +300,17 @@ function llenarTablaIndividuos(){
             promedioSalarioGeneral = totalSalario / countSalarios;
             document.querySelector("#Show_Total_Salarios").innerHTML = "$"+totalSalario.toFixed(2);
             document.querySelector("#Show_Salario_Promedio_General").innerHTML = "$"+promedioSalarioGeneral.toFixed(2);
+            let contenedorSalarioPromedioGenero = document.getElementById("contenedor_salario_promedio_genero");
+            for(const sg of objetosSalarioGenero){
+                sg.Promedio = sg.Salario / sg.Cantidad;
+            }
+            for(const g of objetosSalarioGenero){
+                contenedorSalarioPromedioGenero.innerHTML += 
+                '<div class="input-group mb-3">'+
+                    '<span class="input-group-text" id="Genero_'+g.Genero+'">'+g.Genero+': </span>'+
+                    '<label class="form-control" aria-describedby="Genero_'+g.Genero+'" id="Show_Genero_'+g.Genero+'">$'+g.Promedio.toFixed(2)+'</label>'+
+                '</div>';
+            };
             let tablaRegistros = document.getElementById("card_tabla_registros");
             let tablaTotales = document.getElementById("card_tabla_totales");
             tablaRegistros.style.display = "block";

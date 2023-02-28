@@ -162,16 +162,7 @@
                         <div class="card-header">
                             Salario Promedio Por Género:
                         </div>
-                        <div class="card-body">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="Genero_Hombre">Hombre: </span>
-                                <label class="form-control" aria-describedby="Genero_Hombre" id="Show_Genero_Hombre"></label>
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="Genero_Mujer">Mujer: </span>
-                                <label class="form-control" aria-describedby="Genero_Mujer" id="Show_Genero_Mujer"></label>
-                            </div>
-                        </div>
+                        <div class="card-body" id="contenedor_salario_promedio_genero"></div>
                     </div>
                 </div>
                 <div class="card-footer text-muted">
